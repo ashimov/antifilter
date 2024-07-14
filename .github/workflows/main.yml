@@ -16,7 +16,7 @@ jobs:
       actions: write
     steps:
       - name: Set Date Variable
-        run: date +'%Y-%m-%d' > BRANCH_DATE.txt
+        run: date +'%Y%m%d' > BRANCH_DATE.txt
       - name: Archive branch date
         uses: actions/upload-artifact@v2
         with:
