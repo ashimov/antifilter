@@ -106,7 +106,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Rebase main branch
         run: |
-          sleep 30s
+          sleep 5s
+          git checkout master
           git pull
           git rebase ${{ env.BRANCH_DATE }}
-          git push
+          git push origin master
