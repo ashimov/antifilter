@@ -107,7 +107,7 @@ jobs:
       - name: Rebase main branch
         run: |
           sleep 5s
-          git checkout master
+          git checkout main
           git pull
           git merge ${{ env.BRANCH_DATE }}
-          git push origin master
+          git push origin main
