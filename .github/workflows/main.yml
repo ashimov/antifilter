@@ -69,6 +69,7 @@ jobs:
       - name: Download and branch
         run: |
           git checkout ${{ env.BRANCH_DATE }}
+          mkdir files && cd files
           wget -O subnet.lst https://antifilter.download/list/subnet.lst
           wget -O ipsum.lst  https://antifilter.download/list/ipsum.lst
           wget -O community.lst https://community.antifilter.download/list/community.lst
