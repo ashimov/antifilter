@@ -1,0 +1,82 @@
+name: main
+
+on:
+  # schedule:
+  #   - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  set-date:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set Date Variable
+        run: date +'%Y-%m-%d' > BRANCH_DATE.txt
+      
+      - name: Archive branch date
+        uses: actions/upload-artifact@v2
+        with:
+          name: branch-date
+          path: BRANCH_DATE.txt
+  
+  branching:
+    needs: set-date
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download branch date
+        uses: actions/download-artifact@v2
+        with:
+          name: branch-date
+      - name: Set branch date
+        run: |
+            echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create new branch
+        run: |
+          git checkout -b ${{ env.BRANCH_DATE }}
+          git push origin ${{ env.BRANCH_DATE }}
+
+  download-and-push-files:
+    needs: branching
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download branch date
+        uses: actions/download-artifact@v2
+        with:
+          name: branch-date     
+      - name: Set branch date
+        run: |
+            echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download files
+        run: |
+          wget https://antifilter.download/list/subnet.lst
+          wget https://antifilter.download/list/ipsum.lst
+          wget https://community.antifilter.download/list/community.lst
+      - name: Push to branch
+        run: |
+          git checkout ${{ env.BRANCH_DATE }}
+          git add .
+          git commit -m "Added downloaded files"
+          git push origin ${{ env.BRANCH_DATE }}
+
+  rebase:
+    needs: download-and-push-files
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download branch date
+        uses: actions/download-artifact@v2
+        with:
+          name: branch-date     
+      - name: Set branch date
+        run: |
+            echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Rebase main branch
+        run: |
+          git checkout main
+          git pull
+          git rebase ${{ env.BRANCH_DATE }}
+          git push origin main
