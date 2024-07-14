@@ -12,6 +12,8 @@ jobs:
       pull-requests: write
       issues: write
       repository-projects: write
+      contents: write
+      actions: write
     steps:
       - name: Set Date Variable
         run: date +'%Y-%m-%d' > BRANCH_DATE.txt
@@ -28,6 +30,8 @@ jobs:
       pull-requests: write
       issues: write
       repository-projects: write
+      contents: write
+      actions: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -50,6 +54,8 @@ jobs:
       pull-requests: write
       issues: write
       repository-projects: write
+      contents: write
+      actions: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
