@@ -64,16 +64,13 @@ jobs:
       - name: Set branch date
         run: |
             echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
-      - name: Checkout
+      - name: Push to branch
         uses: actions/checkout@v2
-      - name: Download files
         run: |
+          git checkout ${{ env.BRANCH_DATE }}
           wget https://antifilter.download/list/subnet.lst
           wget https://antifilter.download/list/ipsum.lst
           wget https://community.antifilter.download/list/community.lst
-      - name: Push to branch
-        run: |
-          git checkout ${{ env.BRANCH_DATE }}
           git add .
           git commit -m "Added downloaded files"
           git log
