@@ -65,8 +65,11 @@ jobs:
         run: |
             echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
       - name: Checkout
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v3
+      - name: Set git config
+        run: |
+          git config user.email "admin@webpan.org"
+          git config user.name "admin"
       - name: Download files
         run: |
           cd ${{ github.workspace }}
