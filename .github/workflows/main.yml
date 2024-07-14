@@ -23,32 +23,32 @@ jobs:
           name: branch-date
           path: BRANCH_DATE.txt
   
-  branching:
-    needs: set-date
-    runs-on: ubuntu-22.04
-    permissions:
-      pull-requests: write
-      issues: write
-      repository-projects: write
-      contents: write
-      actions: write
-    steps:
-      - name: Download branch date
-        uses: actions/download-artifact@v2
-        with:
-          name: branch-date
-      - name: Set branch date
-        run: |
-            echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Create new branch
-        run: |
-          git checkout -B ${{ env.BRANCH_DATE }}
-          git push origin ${{ env.BRANCH_DATE }}
+  # branching:
+  #   needs: set-date
+  #   runs-on: ubuntu-22.04
+  #   permissions:
+  #     pull-requests: write
+  #     issues: write
+  #     repository-projects: write
+  #     contents: write
+  #     actions: write
+  #   steps:
+  #     - name: Download branch date
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: branch-date
+  #     - name: Set branch date
+  #       run: |
+  #           echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Create new branch
+  #       run: |
+  #         git checkout -B ${{ env.BRANCH_DATE }}
+  #         git push origin ${{ env.BRANCH_DATE }}
 
   download-and-push-files:
-    needs: branching
+    needs: set-date
     runs-on: ubuntu-22.04
     permissions:
       pull-requests: write
@@ -70,6 +70,11 @@ jobs:
         run: |
           git config user.email "admin@webpan.org"
           git config user.name "admin"
+
+      - name: Create new branch
+        run: |
+          git checkout -B ${{ env.BRANCH_DATE }}
+
       - name: Download files
         run: |
           cd ${{ github.workspace }}
@@ -81,7 +86,7 @@ jobs:
         run: |
           git add ${{ github.workspace }}/files/*
           git commit -m "Added downloaded files"
-          git push origin ${{ env.BRANCH_DATE }}
+          git push origin HEAD:${{ env.BRANCH_DATE }}
 
   rebase:
     needs: download-and-push-files
