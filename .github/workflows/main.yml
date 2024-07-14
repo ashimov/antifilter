@@ -109,5 +109,5 @@ jobs:
           sleep 5s
           git checkout master
           git pull
-          git rebase ${{ env.BRANCH_DATE }}
+          git merge ${{ env.BRANCH_DATE }}
           git push origin master
