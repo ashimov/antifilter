@@ -69,15 +69,15 @@ jobs:
       - name: Download and branch
         run: |
           git checkout ${{ env.BRANCH_DATE }}
-          wget https://antifilter.download/list/subnet.lst
-          wget https://antifilter.download/list/ipsum.lst
-          wget https://community.antifilter.download/list/community.lst
+          wget -O subnet.lst https://antifilter.download/list/subnet.lst
+          wget -O ipsum.lst  https://antifilter.download/list/ipsum.lst
+          wget -O community.lst https://community.antifilter.download/list/community.lst
           echo 'Random sample text' > test.txt
           ls -la
           git add .
           git commit -m "Added downloaded files"
           git log
-          git push ${{ env.BRANCH_DATE }}
+          git push
 
   rebase:
     needs: download-and-push-files
