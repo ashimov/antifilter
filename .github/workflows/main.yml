@@ -1,19 +1,5 @@
 name: main
 
-permissions:
-  Actions: write
-  Checks: write
-  Contents: write
-  Deployments: write
-  Discussions: write
-  Issues: write
-  Metadata: read
-  Packages: write
-  PullRequests: write
-  RepositoryProjects: write
-  SecurityEvents: write
-  Statuses: write
-
 on:
   # schedule:
   #   - cron: 0 0 * * *
@@ -22,10 +8,22 @@ on:
 jobs:
   set-date:
     runs-on: ubuntu-20.04
+    permissions:
+      Actions: write
+      Checks: write
+      Contents: write
+      Deployments: write
+      Discussions: write
+      Issues: write
+      Metadata: read
+      Packages: write
+      PullRequests: write
+      RepositoryProjects: write
+      SecurityEvents: write
+      Statuses: write
     steps:
       - name: Set Date Variable
         run: date +'%Y-%m-%d' > BRANCH_DATE.txt
-      
       - name: Archive branch date
         uses: actions/upload-artifact@v2
         with:
@@ -35,6 +33,19 @@ jobs:
   branching:
     needs: set-date
     runs-on: ubuntu-20.04
+    permissions:
+      Actions: write
+      Checks: write
+      Contents: write
+      Deployments: write
+      Discussions: write
+      Issues: write
+      Metadata: read
+      Packages: write
+      PullRequests: write
+      RepositoryProjects: write
+      SecurityEvents: write
+      Statuses: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -53,6 +64,19 @@ jobs:
   download-and-push-files:
     needs: branching
     runs-on: ubuntu-20.04
+    permissions:
+      Actions: write
+      Checks: write
+      Contents: write
+      Deployments: write
+      Discussions: write
+      Issues: write
+      Metadata: read
+      Packages: write
+      PullRequests: write
+      RepositoryProjects: write
+      SecurityEvents: write
+      Statuses: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -78,6 +102,19 @@ jobs:
   rebase:
     needs: download-and-push-files
     runs-on: ubuntu-20.04
+    permissions:
+      Actions: write
+      Checks: write
+      Contents: write
+      Deployments: write
+      Discussions: write
+      Issues: write
+      Metadata: read
+      Packages: write
+      PullRequests: write
+      RepositoryProjects: write
+      SecurityEvents: write
+      Statuses: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
