@@ -9,18 +9,9 @@ jobs:
   set-date:
     runs-on: ubuntu-20.04
     permissions:
-      Actions: write
-      Checks: write
-      Contents: write
-      Deployments: write
-      Discussions: write
-      Issues: write
-      Metadata: read
-      Packages: write
-      PullRequests: write
-      RepositoryProjects: write
-      SecurityEvents: write
-      Statuses: write
+      pull-requests: write
+      issues: write
+      repository-projects: write
     steps:
       - name: Set Date Variable
         run: date +'%Y-%m-%d' > BRANCH_DATE.txt
@@ -34,18 +25,9 @@ jobs:
     needs: set-date
     runs-on: ubuntu-20.04
     permissions:
-      Actions: write
-      Checks: write
-      Contents: write
-      Deployments: write
-      Discussions: write
-      Issues: write
-      Metadata: read
-      Packages: write
-      PullRequests: write
-      RepositoryProjects: write
-      SecurityEvents: write
-      Statuses: write
+      pull-requests: write
+      issues: write
+      repository-projects: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -65,18 +47,9 @@ jobs:
     needs: branching
     runs-on: ubuntu-20.04
     permissions:
-      Actions: write
-      Checks: write
-      Contents: write
-      Deployments: write
-      Discussions: write
-      Issues: write
-      Metadata: read
-      Packages: write
-      PullRequests: write
-      RepositoryProjects: write
-      SecurityEvents: write
-      Statuses: write
+      pull-requests: write
+      issues: write
+      repository-projects: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -103,18 +76,9 @@ jobs:
     needs: download-and-push-files
     runs-on: ubuntu-20.04
     permissions:
-      Actions: write
-      Checks: write
-      Contents: write
-      Deployments: write
-      Discussions: write
-      Issues: write
-      Metadata: read
-      Packages: write
-      PullRequests: write
-      RepositoryProjects: write
-      SecurityEvents: write
-      Statuses: write
+      pull-requests: write
+      issues: write
+      repository-projects: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
