@@ -64,8 +64,9 @@ jobs:
       - name: Set branch date
         run: |
             echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
-      - name: Push to branch
+      - name: Checkout
         uses: actions/checkout@v2
+      - name: Download and branch
         run: |
           git checkout ${{ env.BRANCH_DATE }}
           wget https://antifilter.download/list/subnet.lst
