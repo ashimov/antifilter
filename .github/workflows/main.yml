@@ -76,7 +76,8 @@ jobs:
           git checkout ${{ env.BRANCH_DATE }}
           git add .
           git commit -m "Added downloaded files"
-          git push origin ${{ env.BRANCH_DATE }}
+          git log
+          git push ${{ env.BRANCH_DATE }}
 
   rebase:
     needs: download-and-push-files
