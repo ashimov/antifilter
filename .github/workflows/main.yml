@@ -112,5 +112,5 @@ jobs:
           git checkout main
           git fetch origin main
           git fetch origin ${{ env.BRANCH_DATE }}
-          git merge origin ${{ env.BRANCH_DATE }}
+          git merge origin ${{ env.BRANCH_DATE }}  --no-edit
           git push origin main
