@@ -108,5 +108,5 @@ jobs:
         run: |
           sleep 5s
           git pull
-          git merge ${{ env.BRANCH_DATE }}
+          git merge origin/${{ env.BRANCH_DATE }}
           git push origin main
