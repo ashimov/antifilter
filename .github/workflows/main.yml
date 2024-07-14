@@ -94,6 +94,8 @@ jobs:
       pull-requests: write
       issues: write
       repository-projects: write
+      contents: write
+      actions: write
     steps:
       - name: Download branch date
         uses: actions/download-artifact@v2
@@ -108,5 +110,5 @@ jobs:
         run: |
           sleep 5s
           git pull
-          git merge origin/${{ env.BRANCH_DATE }}
+          git rebase origin ${{ env.BRANCH_DATE }}
           git push origin main
