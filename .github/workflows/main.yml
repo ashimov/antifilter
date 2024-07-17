@@ -22,6 +22,30 @@ jobs:
         with:
           name: branch-date
           path: BRANCH_DATE.txt
+  
+  # branching:
+  #   needs: set-date
+  #   runs-on: ubuntu-22.04
+  #   permissions:
+  #     pull-requests: write
+  #     issues: write
+  #     repository-projects: write
+  #     contents: write
+  #     actions: write
+  #   steps:
+  #     - name: Download branch date
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: branch-date
+  #     - name: Set branch date
+  #       run: |
+  #           echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Create new branch
+  #       run: |
+  #         git checkout -B ${{ env.BRANCH_DATE }}
+  #         git push origin ${{ env.BRANCH_DATE }}
 
   download-and-push-files:
     needs: set-date
@@ -34,7 +58,7 @@ jobs:
       actions: write
     steps:
       - name: Download branch date
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: branch-date     
       - name: Set branch date
@@ -53,7 +77,6 @@ jobs:
       - name: Download files
         run: |
           cd ${{ github.workspace }}
-          mkdir files && cd files
           wget -O subnet.lst https://antifilter.download/list/subnet.lst
           wget -O ipsum.lst  https://antifilter.download/list/ipsum.lst
           wget -O community.lst https://community.antifilter.download/list/community.lst
@@ -75,7 +98,7 @@ jobs:
       actions: write
     steps:
       - name: Download branch date
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: branch-date     
       - name: Set branch date
