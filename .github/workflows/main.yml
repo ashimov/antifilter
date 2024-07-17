@@ -22,30 +22,6 @@ jobs:
         with:
           name: branch-date
           path: BRANCH_DATE.txt
-  
-  # branching:
-  #   needs: set-date
-  #   runs-on: ubuntu-22.04
-  #   permissions:
-  #     pull-requests: write
-  #     issues: write
-  #     repository-projects: write
-  #     contents: write
-  #     actions: write
-  #   steps:
-  #     - name: Download branch date
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: branch-date
-  #     - name: Set branch date
-  #       run: |
-  #           echo "BRANCH_DATE=$(cat BRANCH_DATE.txt)" >> $GITHUB_ENV
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Create new branch
-  #       run: |
-  #         git checkout -B ${{ env.BRANCH_DATE }}
-  #         git push origin ${{ env.BRANCH_DATE }}
 
   download-and-push-files:
     needs: set-date
@@ -83,7 +59,8 @@ jobs:
           wget -O community.lst https://community.antifilter.download/list/community.lst
       - name: Push to branch
         run: |
-          git add ${{ github.workspace }}/files/*
+          cd ${{ github.workspace }}
+          git add .
           git commit -m "Added downloaded files"
           git push origin HEAD:${{ env.BRANCH_DATE }}
 
